@@ -1,0 +1,9 @@
+---
+- name: "update the redhat OS "
+  hosts: vmsspocrhelvm1
+  become: true
+  tasks:
+    - name: Upgrade all packages
+      yum:
+        name: '*'
+        state: latest

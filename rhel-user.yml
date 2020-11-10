@@ -1,0 +1,11 @@
+---
+- name: "update the redhat OS "
+  hosts: all
+  become: yes
+  tasks:
+    - name: create user
+      user:
+        name: mura
+        comment: Mura Muthi
+        uid: 2000
+        state: present
