@@ -1,0 +1,20 @@
+---
+    - name: Download nessus
+      get_url:
+        url: "https://sago01seapshared01soe01.blob.core.windows.net/securityagent/NessusAgent-es7.x86_64.rpm?sp=rcw&st=2020-11-03T09:57:09Z&se=2021-01-12T17:57:09Z&spr=https&sv=2019-12-12&sr=b&sig=dSsioYfFXphFDrPzK%2FaOal4zU%2FZ6jjwXpAlFksvqB7E%3D"
+        dest: /tmp/NessusAgent-es7.x86_64.rpm
+
+    - name: Install the package
+      yum:
+        name: /tmp/NessusAgent-es7.x86_64.rpm
+        state: present
+
+    - name: Start nessusagent, if not started
+      service:
+        name: nessusagent
+        state: started
+
+    - name: To remove the nessus rpm file from /tmp
+      file:
+        path: /tmp/NessusAgent-es7.x86_64.rpm
+        state: absent

@@ -1,0 +1,8 @@
+---
+# vars file for aia-ansible-manage-lvm
+
+ __lvm_packages:
+  - lvm2
+  - sg3_utils
+
+ xfs_package: xfsprogs

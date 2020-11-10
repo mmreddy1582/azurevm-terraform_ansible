@@ -1,0 +1,19 @@
+---
+# tasks file for aia-ansible-manage-lvm
+- name: include OS specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define lvm_packages.
+  set_fact:
+    lvm_packages: "{{ __lvm_packages | list }}"
+  when: lvm_packages is not defined
+
+- debug: var=lvm_packages
+
+- include_tasks: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- include_tasks: manage_lvm.yml
+  when:
+    - lvm_groups is defined
+    - manage_lvm|bool

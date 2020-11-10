@@ -1,0 +1,31 @@
+{{ apache_global_vhost_settings }}
+
+{# Set up VirtualHosts #}
+{% for vhost in apache_vhosts %}
+<VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}>
+  ServerName {{ vhost.servername }}
+{% if vhost.documentroot is defined %}
+  DocumentRoot "{{ vhost.documentroot }}"
+{% endif %}
+{% if vhost.error_log is defined %}
+  ErrorLog logs/{{ ansible_hostname }}-{{ vhost.error_log }}
+{% endif %}
+{% if vhost.access_log is defined %}
+  CustomLog logs/{{ ansible_hostname }}-{{ vhost.access_log }} common
+{% endif %}
+{% if vhost.documentroot is defined %}
+  <Directory "{{ vhost.documentroot }}">
+    AllowOverride {{ vhost.allow_override | default(apache_allow_override) }}
+    Options {{ vhost.options | default(apache_options) }}
+{% if apache_vhosts_version == "2.2" %}
+    Order allow,deny
+    Allow from all
+{% else %}
+    Require all granted
+{% endif %}
+  </Directory>
+{% endif %}
+</VirtualHost>
+
+{% endfor %}
+

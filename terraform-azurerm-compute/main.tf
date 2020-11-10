@@ -106,8 +106,7 @@ resource "azurerm_virtual_machine" "vm-linux" {
   }
   
   provisioner "local-exec" {
-   # command = "echo The server's IP address is ${azurerm_network_interface.vm.private_ip_address}"
-     command = "ansible-playbook -i '${azurerm_network_interface.vm.private_ip_address},' -u ${var.admin_username} --private-key ${var.ssh_privatekey} rhel-user.yml"
+     command = "ansible-playbook -i '${azurerm_network_interface.vm.private_ip_address},' -u ${var.admin_username} --private-key ${var.ssh_privatekey} ansible-playbook.yml"
   }
 
 }
@@ -136,18 +135,4 @@ resource "azurerm_network_interface" "vm" {
      }
   
   tags                            = var.tags
-}
-
-resource "azurerm_virtual_machine_extension" "example" {
-  name                 = var.vm_hostname
-  virtual_machine_id   = azurerm_virtual_machine.vm-linux.id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.0"
-
-  settings = <<SETTINGS
-    {   "fileUris": ["https://sago01seapshared01soe01.blob.core.windows.net/securityagent/NessusAgent-es7.x86_64.rpm?sp=rcw&st=2020-11-03T09:57:09Z&se=2021-01-12T17:57:09Z&spr=https&sv=2019-12-12&sr=b&sig=dSsioYfFXphFDrPzK%2FaOal4zU%2FZ6jjwXpAlFksvqB7E%3D"],
-        "commandToExecute": "sudo yum install NessusAgent-es7.x86_64.rpm -y;systemctl start nessusagent"
-    }
-SETTINGS
 }
