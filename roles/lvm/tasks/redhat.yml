@@ -1,0 +1,37 @@
+---
+- name: redhat | installing lvm packages
+  package:
+    name: "{{ lvm_packages }}"
+    state: "{{ pkg_state }}"
+
+- name: redhat | debug lvg
+  debug:
+    var: lv
+    verbosity: 3
+  loop: "{{ lookup('subelements', lvm_groups, 'lvnames', {'skip_missing': True}, wantlist=True) }}"
+  loop_control:
+    loop_var: lv
+
+- name: redhat | install xfs tools
+  package:
+    name: "{{ xfs_package }}"
+    state: "{{ pkg_state }}"
+  loop: "{{ lookup('subelements', lvm_groups, 'lvnames', {'skip_missing': True}, wantlist=True) }}"
+  loop_control:
+    loop_var: lv
+  when:
+    - lv.1 is defined
+    - lv.1 != "None"
+    - lv.1.filesystem is defined
+    - lv.1.filesystem == "xfs"
+    - lv.1.create is defined
+    - lv.1.create|bool
+
+- name: redhat | checking for scsi devices
+  command: sg_scan
+  register: scsi_devices
+  changed_when: false
+
+- name: redhat | rescanning for new disks
+  command: /usr/bin/rescan-scsi-bus.sh
+  changed_when: false

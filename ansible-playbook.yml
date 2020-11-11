@@ -1,0 +1,41 @@
+---
+- name: Install and configure apache
+  hosts: all
+  become: True
+  vars:
+    lvm_groups:
+      - vgname: test-vg
+        disks:
+          - /dev/sdc
+        create: true
+        lvnames:
+          - lvname: test_1
+            size: 3g
+            create: true
+            filesystem: ext4
+            mount: true
+            mntp: /mnt/test_1
+          - lvname: test_2
+            size: 4g
+            create: true
+            filesystem: xfs
+            mount: true
+            mntp: /mnt/test_2
+    manage_lvm: true
+
+  
+ 
+  pre_tasks:
+    - debug:
+       msg: 'Beginning apache configuration  {{ ansible_hostname }}.'
+
+  roles:
+     - user
+     - lvm 
+     - apache
+     - nessus
+     
+
+  post_tasks:
+     - debug:
+         msg: 'Apache Installed in {{ ansible_hostname }} client.'

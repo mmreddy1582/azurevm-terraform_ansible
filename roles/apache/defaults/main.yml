@@ -1,0 +1,50 @@
+---
+apache_enablerepo: ""
+
+apache_listen: "Listen"
+apache_listen_ip: "*"
+apache_listen_port: 80
+apache_listen_port_ssl: 443
+
+apache_create_vhosts: true
+apache_vhosts_filename: "vhosts.conf"
+apache_vhosts_template: "vhosts.conf.j2"
+
+apache_remove_default_vhost: false
+
+apache_global_vhost_settings: |
+  DirectoryIndex index.php index.html
+
+apache_vhosts:
+  # Additional properties:
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+  - servername: "local.dev"
+    documentroot: "/var/www/html"
+    error_log: "error.log"
+    access_log: "access.log"
+
+apache_allow_override: "All"
+apache_options: "-Indexes +FollowSymLinks"
+
+apache_mods_disabled: []
+
+# Set initial apache state either `started` or `stopped`
+apache_state: started
+
+# apache notify `restarted` or `reloaded`
+apache_restart_state: restarted
+
+# apache package state, use `present` to make sure it's installed, or `latest`
+apache_packages_state: present
+
+#firewalld service/port details 
+firewalld_zone: public
+firewalld_service: http
+firewalld_mode: yes
+firewalld_state: enabled
+
+# firewalld service name 
+firewalld_service_name: firewalld
+
+# firewalld service state
+firewalld_service_state: reloaded
