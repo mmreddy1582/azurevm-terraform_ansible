@@ -1,7 +1,0 @@
----
-    - name: create user
-      user:
-        name: mura
-        comment: Mura Muthi
-        uid: 2000
-        state: present
