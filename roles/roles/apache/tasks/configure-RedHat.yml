@@ -1,0 +1,29 @@
+---
+- name: Configure Apache.
+  lineinfile:
+    dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  loop: "{{ apache_ports_config_items }}"
+  notify: restart apache
+
+- name: Enable http port 80 and add permanently
+  firewalld:
+    zone: "{{ firewalld_zone }}"
+    service: "{{ firewalld_service }}"
+    permanent: "{{ firewalld_mode }}"
+    state: "{{ firewalld_state }}"
+  notify: restart firewalld
+  
+
+- name: Add apache vhosts configuration.
+  template:
+    src: "{{ apache_vhosts_template }}"
+    dest: "{{ apache_conf_path }}/{{ apache_vhosts_filename }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  when: apache_create_vhosts | bool
+

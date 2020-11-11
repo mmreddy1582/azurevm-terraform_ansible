@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"linuxservers","Source":"./terraform-azurerm-compute","Dir":"terraform-azurerm-compute"},{"Key":"linuxservers.os","Source":"./os","Dir":"terraform-azurerm-compute/os"}]}

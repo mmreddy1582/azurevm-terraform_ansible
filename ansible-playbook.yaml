@@ -1,0 +1,17 @@
+---
+- name: Install and configure apache
+  hosts: all
+  become: True
+
+  pre_tasks:
+    - debug:
+       msg: 'Beginning apache configuration  {{ ansible_hostname }}.'
+
+  roles:
+     - apache
+     - user
+     
+
+  post_tasks:
+     - debug:
+         msg: 'Apache Installed in {{ ansible_hostname }} client.'
