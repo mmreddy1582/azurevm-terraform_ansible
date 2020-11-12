@@ -14,7 +14,7 @@ module "linuxservers" {
   vm_hostname                   = "vmsspocrhelvm1"
   nb_public_ip                  = 0
   remote_port                   = "22"
-  vm_os_id                      = data.azurerm_image.redhat.id
+  vm_os_id                      = data.azurerm_shared_image.redhat.id
   vm_os_publisher               = "RedHat"
   vm_os_offer                   = "RHEL"
   vm_os_sku                     = "7.8"
