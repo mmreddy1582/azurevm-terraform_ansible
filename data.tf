@@ -4,8 +4,8 @@ data "azurerm_subnet" "appsubnet" {
   resource_group_name  = "rg-sg01-sea-n-nonprodsrv01-network01"
 }
 
-data "azurerm_image" "redhat" {
-  name                = "img-sg01-sea-rhel78-1.0.9"
-  resource_group_name = "rg-sg01-sea-p-vmimages-redhat01"
-
+data "azurerm_shared_image" "example" {
+  name                = "Redhat7"
+  gallery_name        = "SharedimagegalleryGO"
+  resource_group_name = "rg-go01-eas-p-sharedimage"
 }
