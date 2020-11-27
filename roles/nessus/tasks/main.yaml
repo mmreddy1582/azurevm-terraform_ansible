@@ -1,6 +1,6 @@
 ---
      - name: Install the package
-      yum:
+       yum:
         name: /tmp/NessusAgent-es7.x86_64.rpm
         state: present
 
