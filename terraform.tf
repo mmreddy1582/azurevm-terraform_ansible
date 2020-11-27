@@ -3,6 +3,6 @@ terraform {
         resource_group_name  = "vmssremotepoc-rg1"
         storage_account_name = "vmsstfremotestorage"
         container_name       = "vmtfstate"
-        key                  = "vmsspoc-rg2.tfstate"
+        key                  = "vmsspocimage-rg.tfstate"
     }
 }
