@@ -6,7 +6,7 @@
     lvm_groups:
       - vgname: test-vg
         disks:
-          - /dev/sdc
+          - /dev/sdb
         create: true
         lvnames:
           - lvname: test_1
