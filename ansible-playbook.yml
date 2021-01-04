@@ -31,7 +31,6 @@
 
   roles:
      - user
-     - lvm 
      - apache
    
      
