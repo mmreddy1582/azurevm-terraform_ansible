@@ -33,9 +33,9 @@
      - user
      - lvm 
      - apache
-     - nessus
+   
      
 
   post_tasks:
      - debug:
-         msg: 'Apache Installed in {{ ansible_hostname }} client.'
+         msg: 'Ansible CFM sucessfully deployed in {{ ansible_hostname }} client.'
